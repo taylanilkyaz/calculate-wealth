@@ -18,7 +18,12 @@ const UserSchema = mongoose.Schema({
         lowercase: true,
         required: [true, "can't be blank"],
         match: [/\S+@\S+\.\S+/, 'is invalid'],
+        unique: true,
     },
-}, { timestamps: true })
+    password: {
+        type: String,
+        required: true,
+    }
+}, { timestamps: true });
 
 module.exports = mongoose.model('User', UserSchema);
