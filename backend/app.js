@@ -12,13 +12,16 @@ app.use(bodyParser.json());
 const postsRoute = require('./routes/posts');
 app.use('/posts', postsRoute);
 
+const usersRoute = require('./routes/users');
+app.use('/users', usersRoute);
+
 //ROUTES
 app.get('/', (req, res) => {
     res.send('We are at home');
 });
 
 //Connect to DB
-mongoose.connect(process.env.DB_CONNECTION, { useUnifiedTopology: true, useNewUrlParser: true }, () => {
+mongoose.connect(process.env.DB_CONNECTION, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }, () => {
     console.log("Connected to the mongodb");
 });
 
