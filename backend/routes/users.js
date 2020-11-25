@@ -12,21 +12,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-//Post User
-router.post('/', async (req, res) => {
-    const user = new User({
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password
-    });
-    try {
-        const savedUser = await user.save();
-        res.json(savedUser);
-    } catch (error) {
-        res.json({ message: error });
-    }
-});
-
 //Get Spesific User
 router.get('/:userId', async (req, res) => {
     try {
@@ -56,7 +41,7 @@ router.put('/:userId', async (req, res) => {
             { _id: req.params.userId },
             {
                 $set: {
-                    username: req.body.username,
+                    name: req.body.name,
                     email: req.body.email,
                     password: req.body.password
                 }
@@ -65,7 +50,7 @@ router.put('/:userId', async (req, res) => {
     } catch (err) {
         res.json({ message: 'Update failed. Email must be unique.' });
     }
-
 });
+
 
 module.exports = router;

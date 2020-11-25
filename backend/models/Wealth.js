@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const { isEmail } = require('validator');
-const Shema = mongoose.Shema;
+const Schema = mongoose.Shema;
 
 const units = {
     DOLLAR: 'Dolar',
@@ -9,7 +8,8 @@ const units = {
     POUND: 'Pound',
     TURKISHLIRA: 'TL'
 }
-const WealthSchema = mongoose.Schema({
+
+const WealthSchema = new mongoose.Schema({
     unit: {
         type: units,
         require: [true, "can't be blank"]
@@ -17,19 +17,13 @@ const WealthSchema = mongoose.Schema({
     amount: {
         type: Number,
         require: [true, "can't be blank"]
-    },    
-    user: {
-        type:Shema.Types.ObjectId,
-        ref:"User" 
     },
-}, { timestamps: true });
-
-WealthSchema.pre('save', async function save(next) {
-    if(UserSchema.mongoose.fin)
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+}, {
+    timestamps: true
 });
-
-UserSchema.methods.validatePassword = async function validatePassword(data) {
-    return bcrypt.compare(data, this.password);
-};
 
 module.exports = mongoose.model('Wealth', WealthSchema);

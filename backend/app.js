@@ -12,8 +12,14 @@ app.use(bodyParser.json());
 const postsRoute = require('./routes/posts');
 app.use('/posts', postsRoute);
 
+const authRoute = require('./routes/auth');
+app.use('/auth', authRoute);
+
 const usersRoute = require('./routes/users');
 app.use('/users', usersRoute);
+
+const wealthRoute = require('./routes/wealth');
+app.use('/wealth', wealthRoute);
 
 //ROUTES
 app.get('/', (req, res) => {
