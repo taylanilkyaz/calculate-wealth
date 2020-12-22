@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 //Create User
-router.post('/register', async (req, res) => {
+router.post('/signUp', async (req, res) => {
 
     //Checking if user registered before
     const emailExist = await User.findOne({ email: req.body.email });
@@ -16,7 +16,8 @@ router.post('/register', async (req, res) => {
     const hashPassword = await bcrypt.hash(req.body.password, salt);
 
     const user = new User({
-        name: req.body.name,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         password: hashPassword,
     });
@@ -43,7 +44,7 @@ router.post('/login', async (req, res) => {
     if (!validPass) return res.status(400).send('Invalid password');
 
     //Create and assign a token
-    let jwtData = { _id: user._id, email: user.email, name: user.name };
+    let jwtData = { _id: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName };
     const token = jwt.sign(jwtData, process.env.TOKEN_SECRET);
 
 
@@ -63,7 +64,7 @@ router.get('/me', async (req, res) => {
     const user = await User.findOne({ email: tokenUser.email });
 
     //Create and assign a token
-    let jwtData = { _id: user._id, email: user.email, name: user.name };
+    let jwtData = { _id: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName };
     const token = jwt.sign(jwtData, process.env.TOKEN_SECRET);
 
 
