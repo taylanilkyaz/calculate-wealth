@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,7 +9,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -33,40 +32,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function UserForm(user) {
+const UserForm = ({ firstName, lastName, email, password, onChange, onSubmitUser }) => {
     const classes = useStyles();
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-
-    const userForm = (event) => {
-        event.preventDefault();// It prevent reload page.
-        
-        const newUser = {
-            firstName,
-            lastName,
-            email,
-            password
-        }
-        if(user != null && user._id != null){
-            //edit form
-            axios.put(`http://localhost:3001/auth/users/${user.id}`, newUser)
-            .then(response => console.log(response.data));
-        }
-        else{
-            axios.post("http://localhost:3001/auth/signUp", newUser)
-            .then(response => console.log(response.data));
-        }
- 
-    }
-    if (user != null && user._id != null) {
-        //Edit form
-        setFirstName(user.firstName);
-        setLastName(user.lastName);
-        setEmail(user.email);
-        setPassword(user.password);
-    }
 
     return (
         <div>
@@ -91,8 +58,9 @@ export default function UserForm(user) {
                                     fullWidth
                                     id="firstName"
                                     label="First Name"
+                                    value={firstName}
                                     autoFocus
-                                    onChange={e => setFirstName(e.target.value)} />
+                                    onChange={e => onChange(e)} />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -102,8 +70,9 @@ export default function UserForm(user) {
                                     id="lastName"
                                     label="Last Name"
                                     name="lastName"
+                                    value={lastName}
                                     autoComplete="lname"
-                                    onChange={e => setLastName(e.target.value)} />
+                                    onChange={e => onChange(e)} />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -113,8 +82,9 @@ export default function UserForm(user) {
                                     id="email"
                                     label="Email Address"
                                     name="email"
+                                    value={email}
                                     autoComplete="email"
-                                    onChange={e => setEmail(e.target.value)}
+                                    onChange={e => onChange(e)}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -126,8 +96,9 @@ export default function UserForm(user) {
                                     label="Password"
                                     type="password"
                                     id="password"
+                                    value={password}
                                     autoComplete="current-password"
-                                    onChange={e => setPassword(e.target.value)}
+                                    onChange={e => onChange(e)}
                                 />
                             </Grid>
                         </Grid>
@@ -137,9 +108,9 @@ export default function UserForm(user) {
                             variant="contained"
                             color="primary"
                             className={classes.submit}
-                            onClick={userForm}
+                            onClick={(e) => onSubmitUser(e)}
                         >
-                            Sign Up
+                            Save
                     </Button>
                         <Grid container justify="flex-end">
                             <Grid item>
@@ -156,3 +127,5 @@ export default function UserForm(user) {
         </div>
     )
 }
+
+export default UserForm;

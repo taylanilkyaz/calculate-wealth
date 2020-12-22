@@ -7,9 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import axios from "axios";
 import { Link } from "react-router-dom";
-import Users from './Users';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     footerButtons: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'space-around'
     },
     avatar: {
         color: 'white',
@@ -41,15 +39,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function UserCard({ id, firstName, lastName, email, password, onDeleteUser }) {
+const UserCard = ({ id, firstName, lastName, email, password, deleteUser }) => {
     const classes = useStyles();
-
-    const deleteUser = (event) => {
-        event.preventDefault();// It prevent reload page.
-        // Send a POST request
-        axios.delete(`http://localhost:3001/users/${id}`)
-            .then(()=>{onDeleteUser(id)});
-    }
 
     return (
         <Card className={classes.root}>
@@ -67,13 +58,15 @@ export default function UserCard({ id, firstName, lastName, email, password, onD
                 </CardContent>
             </CardActionArea>
             <CardActions className={classes.footerButtons}>
-                <Button onClick={deleteUser} size="medium" variant="outlined" color="secondary" style={{ width: '40%' }}>
+                <Button onClick={(e) => deleteUser(e, id)} size="medium" variant="outlined" color="secondary" style={{ width: '40%' }}>
                     Delete
         </Button>
-                <Button component={Link} to={`edit/${id}`} size="medium" variant="outlined" color="primary" style={{ width: '40%' }}>
+                <Button component={Link} to={`edit/${id}`} size="medium" variant="outlined" color="primary" style={{ width: '40%' }} >
                     Edit
         </Button>
             </CardActions>
         </Card>
     );
 }
+
+export default UserCard;
