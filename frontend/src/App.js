@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import Navbar from "./layout/Navbar";
-import Users from "./components/user/Users";
-import SignUp from "./components/user/SignUp";
-import EditUser from "./components/user/EditUser";
+import Users from "./user/controller/show-users/Users";
+import SignUp from "./user/controller/add-user-controller/SignUp";
+import EditUser from "./user/controller/edit-user-controller/EditUser";
 import NotFound from "./pages/NotFound";
 import Homepage from "./components/Homepage";
 import Contribute from "./pages/Contribute";
@@ -18,17 +18,16 @@ class App extends Component {
         <Navbar title="User App 2" />
 
         <Grid container justify="center" alignItems="center">
-            <Grid lg={10} item >
-              <Switch>
-                <Route exact path="/" component={Homepage}></Route>
-                <Route exact path="/users" component={Users}></Route>
-                <Route exact path="/signUp" component={SignUp}></Route>
-                <Route exact path="/github" component={Contribute}></Route>
-                <Route exact path="/edit/:id" component={EditUser}></Route>
-                <Route component={NotFound}></Route>
-              </Switch>
-            </Grid>
-          </Grid>
+          <Switch>
+            <Route exact path="/" component={Homepage}></Route>
+            <Route exact path="/users" component={Users}></Route>
+            <Route exact path="/signUp" component={SignUp}></Route>
+            <Route exact path="/github" component={Contribute}></Route>
+            <Route exact path="/edit/:id" component={EditUser}></Route>
+            <Route component={NotFound}></Route>
+          </Switch>
+
+        </Grid>
 
       </Router>
     )

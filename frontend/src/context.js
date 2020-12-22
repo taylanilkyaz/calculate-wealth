@@ -19,7 +19,6 @@ const reducer = (state, action) => {
             }
 
         case "UPDATE_USER":
-            // console.log(action.payload);
             return {
                 ...state,
                 users: state.users.map(user => action.payload._id === user._id ? action.payload : user)
