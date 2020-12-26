@@ -3,15 +3,13 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const User = require('./models/User');
 require('dotenv/config');
 
 app.use(cors());
 app.use(bodyParser.json());
 
 //Import Routes
-const postsRoute = require('./routes/posts');
-app.use('/posts', postsRoute);
-
 const authRoute = require('./routes/auth');
 app.use('/auth', authRoute);
 
@@ -20,6 +18,15 @@ app.use('/users', usersRoute);
 
 const wealthRoute = require('./routes/wealth');
 app.use('/wealth', wealthRoute);
+
+// const adminUser = new User({
+//     firstName: "admin",
+//     lastName: "admin",
+//     email: "admin@admin.com",
+//     password: "q1",
+//     role: "ADMIN"
+// });
+// adminUser.save();
 
 //ROUTES
 app.get('/', (req, res) => {
