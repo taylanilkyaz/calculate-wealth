@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import UserForm from "../../ui/UserForm";
-import axios from "axios";
+import { getUserRequest, updateUserRequest } from "../../services/UserService";
 
 const EditUser = () => {
 
@@ -18,18 +18,8 @@ const EditUser = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/users/${id}`)
-            .then(response => {
-
-                const result = {
-                    firstName: response.data.firstName,
-                    lastName: response.data.lastName,
-                    email: response.data.email,
-                    password: response.data.password,
-                }
-                setUserState(result);
-            });
-    }, []);
+        getUserRequest(id, setUserState);
+    }, [id]);
 
 
     const updateUser = (event) => {
@@ -42,16 +32,7 @@ const EditUser = () => {
             password: userState.password
         }
 
-        axios.put(`http://localhost:3001/users/${id}`, userToUpdate)
-            .then(response => {
-                const result = {
-                    firstName: response.data.firstName,
-                    lastName: response.data.lastName,
-                    email: response.data.email,
-                    password: response.data.password,
-                }
-                setUserState(result);
-            });
+        updateUserRequest(id, userToUpdate, setUserState)
     }
 
     return (

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import UserForm from "../../ui/UserForm";
-import axios from "axios";
+import { addUserRequest } from "../../services/UserService";
 
 const SignUp = () => {
 
@@ -23,9 +23,7 @@ const SignUp = () => {
             email: userState.email,
             password: userState.password
         }
-
-        axios.post("http://localhost:3001/auth/signUp", newUser)
-            .then(res => res.status(200).json({ message: 'User added successfull' }));
+        addUserRequest(newUser);
     }
 
     return (
