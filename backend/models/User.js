@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs')
 const { isEmail } = require('validator');
 
+
+const role = {
+    ADMIN: 'ADMIN',
+    CUSTOMER: 'CUSTOMER'
+}
+
 const UserSchema = mongoose.Schema({
     firstName: {
         type: String,
@@ -17,7 +23,9 @@ const UserSchema = mongoose.Schema({
         validate: [isEmail, 'invalid email'],
         unique: true,
     },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    role: { type: role, required: true }
+
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', UserSchema);

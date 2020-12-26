@@ -44,7 +44,8 @@ router.put('/:userId', async (req, res) => {
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
                     email: req.body.email,
-                    password: req.body.password
+                    password: req.body.password,
+                    type: "Customer"
                 }
             });
         res.json(updatedUser.body)
