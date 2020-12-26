@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from "axios";
 import UserCard from '../../ui/UserCard';
 import Grid from '@material-ui/core/Grid';
+import { getUsersRequest, deleteUserRequest } from "../../services/UserService"
 
 const Users = () => {
 
@@ -9,24 +9,20 @@ const Users = () => {
 
     const deleteUser = (event, id) => {
         event.preventDefault();// It prevent reload page.
-        // Send a POST request
-        axios.delete(`http://localhost:3001/users/${id}`)
-            .then(() => { onDeleteUser(id) });
+        deleteUserRequest(id, onDeleteUserFromState);
     }
 
-
-    const onDeleteUser = useCallback((userId) => {
+    const onDeleteUserFromState = useCallback((userId) => {
         const updatedUsers = users.filter(user => user._id !== userId);
         setUsers(updatedUsers);
     }, [users]);
 
     useEffect(() => {
-        axios.get("http://localhost:3001/users").then(response => { setUsers(response.data) });
+        getUsersRequest(setUsers);
     }, []);
 
     return (
         <div>
-
             <Grid container style={{ padding: 24, display: 'flex', justifyContent: 'center' }}>
                 {users.map(user => (
                     <Grid key={user._id} style={{ margin: 15 }}>

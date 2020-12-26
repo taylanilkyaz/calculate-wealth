@@ -51,10 +51,12 @@ const UserCard = ({ id, firstName, lastName, email, password, deleteUser }) => {
                     <Typography gutterBottom variant="h5" component="h2" style={{ textTransform: 'capitalize' }}>
                         {firstName} {lastName}
                     </Typography>
+                    <Typography gutterBottom variant="h6" component="h1">
+                        {email}
+                    </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-          </Typography>
+                    </Typography>
                 </CardContent>
             </CardActionArea>
             <CardActions className={classes.footerButtons}>
