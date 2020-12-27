@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 import Navbar from "./layout/Navbar";
-import Users from "./user/controller/show-users/Users";
-import SignUp from "./user/controller/add-user-controller/SignUp";
-import EditUser from "./user/controller/edit-user-controller/EditUser";
+import { Users } from "./user/ui/users";
+import { SignUp }  from "./auth/ui/sign-up";
+import { EditUser } from "./user/ui/edit";
 import NotFound from "./pages/NotFound";
 import Homepage from "./components/Homepage";
 import Contribute from "./pages/Contribute";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Grid } from '@material-ui/core';
-
+import { Grid } from "@material-ui/core";
 
 class App extends Component {
   render() {
@@ -26,11 +25,9 @@ class App extends Component {
             <Route exact path="/edit/:id" component={EditUser}></Route>
             <Route component={NotFound}></Route>
           </Switch>
-
         </Grid>
-
       </Router>
-    )
+    );
   }
 }
 

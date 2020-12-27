@@ -24,7 +24,7 @@ const UserSchema = mongoose.Schema({
         unique: true,
     },
     password: { type: String, required: true },
-    role: { type: role, required: true }
+    role: { type: role }
 
 }, { timestamps: true });
 
