@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs')
 const { isEmail } = require('validator');
 
-
 const role = {
     ADMIN: 'ADMIN',
     CUSTOMER: 'CUSTOMER'
