@@ -5,38 +5,38 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const User = require('./models/User');
 require('dotenv/config');
+// import { User } from "./models/User.js"
 
-app.use(cors());
-app.use(bodyParser.json());
+const DatabaseHelpers = require("./helpers/database-helper");
 
-//Import Routes
-const authRoute = require('./routes/auth');
-app.use('/auth', authRoute);
+const helpers = new DatabaseHelpers();
 
-const usersRoute = require('./routes/users');
-app.use('/users', usersRoute);
+async function initiateApp() {
+    app.use(cors());
+    app.use(bodyParser.json());
 
-const wealthRoute = require('./routes/wealth');
-app.use('/wealth', wealthRoute);
+    //Import Routes
+    const authRoute = require('./routes/auth');
+    app.use('/auth', authRoute);
 
-// const adminUser = new User({
-//     firstName: "admin",
-//     lastName: "admin",
-//     email: "admin@admin.com",
-//     password: "q1",
-//     role: "ADMIN"
-// });
-// adminUser.save();
+    const usersRoute = require('./routes/users');
+    app.use('/users', usersRoute);
 
-//ROUTES
-app.get('/', (req, res) => {
-    res.send('We are at home');
-});
+    const wealthRoute = require('./routes/wealth');
+    app.use('/wealth', wealthRoute);
 
-//Connect to DB
-mongoose.connect(process.env.DB_CONNECTION, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }, () => {
-    console.log("Connected to the mongodb");
-});
 
-//Listen port
-app.listen(3001);
+    //ROUTES
+    app.get('/', (req, res) => {
+        res.send('We are at home');
+    });
+
+    await helpers.createConnection();
+    await helpers.createCollections();
+    await helpers.createPredefinedDocuments();
+
+    //Listen port
+    app.listen(3001);
+}
+
+module.exports = initiateApp();
