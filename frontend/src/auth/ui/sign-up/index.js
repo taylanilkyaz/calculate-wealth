@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import UserForm from "../../ui/UserForm";
+import { UserForm } from "../../../user/ui/form";
+import { useSignUpController } from "../../controllers/use-sign-up-controller"
 
 export const SignUp = () => {
+  const { userState, changeHandler, registerUser } = useSignUpController();
   return (
     <div>
       <UserForm

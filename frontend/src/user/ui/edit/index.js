@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import UserForm from "../../ui/UserForm";
-import { getUserRequest, updateUserRequest } from "../../services/UserService";
+import React from "react";
+import { UserForm } from "../../ui/form";
+import { useEditUserController } from "../../controllers/use-edit-user-controller";
 
 export const EditUser = () => {
   const { userState, changeHandler, updateUser } = useEditUserController();

@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserForm = ({
+export const UserForm = ({
   firstName,
   lastName,
   email,
@@ -132,5 +132,3 @@ const UserForm = ({
     </div>
   );
 };
-
-export default UserForm;

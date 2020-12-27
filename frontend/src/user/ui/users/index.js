@@ -1,8 +1,7 @@
 import React from "react";
-import { UserCard } from "./card";
+import { UserCard } from "../card";
 import Grid from "@material-ui/core/Grid";
-import { getUsersRequest, deleteUserRequest } from "../services/UserService";
-import { useUsersController } from "../controllers/use-users-controller";
+import { useUsersController } from "../../controllers/use-users-controller";
 
 export const Users = () => {
   const { users, deleteUser } = useUsersController();

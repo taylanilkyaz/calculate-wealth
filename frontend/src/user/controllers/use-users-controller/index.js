@@ -1,5 +1,6 @@
-import { getUsersRequest, deleteUserRequest } from "../../services/u";
+import { getUsersRequest, deleteUserRequest } from "../../services/use-users-service";
 import { notifySuccess, notifyError } from "../../../layout/Notification";
+import { useState, useCallback, useEffect } from "react";
 
 export const useUsersController = () => {
   const [users, setUsers] = useState([]);
@@ -25,7 +26,9 @@ export const useUsersController = () => {
   );
 
   useEffect(() => {
-    getUsersRequest.then(setUsers);
+    getUsersRequest().then(res => {
+      setUsers(res.data);
+    });
   }, []);
 
   return {

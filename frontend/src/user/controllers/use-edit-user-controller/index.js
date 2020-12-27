@@ -1,3 +1,8 @@
+import { useParams } from "react-router-dom"
+import { useState, useEffect, useCallback } from "react";
+import { getUserRequest, updateUserRequest } from "../../services/use-users-service";
+import { notifySuccess, notifyError } from "../../../layout/Notification";
+
 export const useEditUserController = () => {
   const { id } = useParams();
   const [userState, setUserState] = useState({
@@ -7,31 +12,33 @@ export const useEditUserController = () => {
     password: "",
   });
 
-  // TODO: wrap with useCallback
-  const changeHandler = (e) => {
-    setUserState({ ...userState, [e.target.name]: e.target.value });
-  };
+  const changeHandler = useCallback(
+    (e) => {
+      setUserState({ ...userState, [e.target.name]: e.target.value });
+    }, [userState])
 
-  // TODO will change,
-  // then will be handled here not in the service
   useEffect(() => {
-    getUserRequest(id, setUserState);
+    getUserRequest(id)
+      .then((response) => {
+        setUserState(response.data);
+      });
   }, [id]);
 
-  // TODO wrap with useCallback
-  const updateUser = (event) => {
-    event.preventDefault(); // It prevent reload page.
+  const updateUser = useCallback(
+    (event) => {
+      event.preventDefault(); // It prevent reload page.
 
-    const userToUpdate = {
-      firstName: userState.firstName,
-      lastName: userState.lastName,
-      email: userState.email,
-      password: userState.password,
-    };
-
-    // then will be handled here not in the service
-    updateUserRequest(id, userToUpdate, setUserState);
-  };
+      updateUserRequest(id, userState)
+        .then((response) => {
+          setUserState(response.data);
+          notifySuccess("User has been updated");
+        })
+        .catch(() => {
+          notifyError("User couldn't be edit!");
+        });
+    },
+    [id, userState],
+  )
 
   return {
     userState,
