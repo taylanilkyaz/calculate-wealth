@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 const User = require('../models/User');
 const Wealth = require('../models/Wealth');
+const bcrypt = require('bcryptjs');
+
 require('dotenv/config');
 
-const collections = [User,Wealth];
+const collections = [User, Wealth];
 
 class DatabaseHelpers {
   async createConnection() {
@@ -31,11 +33,15 @@ class DatabaseHelpers {
 
     const adminUser = await User.findOne({ email: process.env.ADMIN_USER_EMAIL }).exec();
     if (!adminUser) {
+
+      const salt = await bcrypt.genSalt(10);
+      const hashPassword = await bcrypt.hash("q1", salt);
+
       const response = await User.create({
         firstName: "admin",
         lastName: "admin",
         email: process.env.ADMIN_USER_EMAIL,
-        password: "q1",
+        password: hashPassword,
         role: "ADMIN"
       })
     }

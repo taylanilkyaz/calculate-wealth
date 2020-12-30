@@ -1,5 +1,5 @@
 import { getUsersRequest, deleteUserRequest } from "../../services/use-users-service";
-import { notifySuccess, notifyError } from "../../../layout/Notification";
+import { notifySuccess, notifyError } from "../../../common-components/controller/use-notification-controller";
 import { useState, useCallback, useEffect } from "react";
 
 export const useUsersController = () => {

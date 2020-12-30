@@ -1,13 +1,15 @@
 import { addUserRequest } from "../../services/use-auth-service";
 import { useState, useCallback } from "react";
-import { notifySuccess, notifyError } from "../../../layout/Notification";
+import { notifySuccess, notifyError } from "../../../common-components/controller/use-notification-controller";
 
 export const useSignUpController = () => {
+
   const [userState, setUserState] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
+    passwordCheck: ""
   });
 
   const changeHandler = useCallback(
@@ -22,10 +24,10 @@ export const useSignUpController = () => {
       event.preventDefault();
       addUserRequest(userState)
         .then(() => {
-          notifySuccess("User has been added");
+          notifySuccess("User has been added.");
         })
-        .catch(() => {
-          notifyError("User couldn't be added!");
+        .catch((res) => {
+          notifyError(res.response.data.msg);
         });
     },
     [userState],
