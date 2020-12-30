@@ -1,6 +1,6 @@
 import { addUserRequest } from "../../services/use-auth-service";
 import { useState, useCallback } from "react";
-import { notifySuccess, notifyError } from "../../../common-components/controller/use-notification-controller";
+import { notifySuccess, notifyError } from "../../../common-components/controllers/use-notification-controller";
 
 export const useSignUpController = () => {
 

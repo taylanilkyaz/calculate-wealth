@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useState, useEffect, useCallback } from "react";
 import { getUserRequest, updateUserRequest } from "../../services/use-users-service";
-import { notifySuccess, notifyError } from "../../../common-components/controller/use-notification-controller";
+import { notifySuccess, notifyError } from "../../../common-components/controllers/use-notification-controller";
 
 export const useEditUserController = () => {
   const { id } = useParams();

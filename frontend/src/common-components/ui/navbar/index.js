@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import { Link } from "react-router-dom";
 
-import { useNavbarController } from '../../controller/use-navbar-controller';
+import { useNavbarController } from '../../controllers/use-navbar-controller';
 
 const useStyles = makeStyles((theme) => ({
     linkText: {
