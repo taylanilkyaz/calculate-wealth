@@ -1,19 +1,26 @@
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const corsOptions = {
+    origin: true,
+    credentials: true
+};
 const User = require('./models/User');
 require('dotenv/config');
-// import { User } from "./models/User.js"
 
 const DatabaseHelpers = require("./helpers/database-helper");
 
 const helpers = new DatabaseHelpers();
 
 async function initiateApp() {
-    app.use(cors());
+
     app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+
+    app.use(cors(corsOptions));
+    app.use(cookieParser());
 
     //Import Routes
     const authRoute = require('./routes/auth');

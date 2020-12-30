@@ -36,6 +36,7 @@ export const UserForm = ({
   lastName,
   email,
   password,
+  passwordCheck,
   onChange,
   onSubmitUser,
 }) => {
@@ -105,6 +106,19 @@ export const UserForm = ({
                   id="password"
                   value={password}
                   autoComplete="current-password"
+                  onChange={(e) => onChange(e)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="passwordCheck"
+                  label="Password Check"
+                  type="password"
+                  id="passwordCheck"
+                  value={passwordCheck}
                   onChange={(e) => onChange(e)}
                 />
               </Grid>

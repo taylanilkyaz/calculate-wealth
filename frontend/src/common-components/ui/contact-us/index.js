@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Contribute() {
+export const ContactUs = () => {
     return (
         <div>
             <h3>Project Files and Contribute to Project</h3>
@@ -11,4 +11,3 @@ function Contribute() {
         </div>
     )
 }
-export default Contribute;

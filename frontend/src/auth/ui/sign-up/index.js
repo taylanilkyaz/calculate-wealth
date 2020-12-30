@@ -10,6 +10,7 @@ export const SignUp = () => {
         lastName={userState.lastName}
         email={userState.email}
         password={userState.password}
+        passwordCheck={userState.passwordCheck}
         onChange={changeHandler}
         onSubmitUser={registerUser}
       />
