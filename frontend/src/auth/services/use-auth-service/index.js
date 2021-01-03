@@ -1,9 +1,28 @@
 import axios from "axios";
+import { formatResponse } from "../../../util";
 
-export const addUserRequest = (user) => axios.post("http://localhost:3001/auth/signUp", user);
+const dataFormatterFunct = res => {
+    const deleteId = res._id;
+    delete res._id;
+    return { user: { id: deleteId, ...res } }
+}
 
-export const loginUserRequest = (email, password) => axios.post("http://localhost:3001/auth/login", { email, password }, { withCredentials: true });
+export const addUserRequest = (user) =>
+    formatResponse(
+        axios.post("http://localhost:3001/api/v1/auth/signUp", user),
+        dataFormatterFunct
+    );
+export const loginUserRequest = (email, password) =>
+    formatResponse(
+        axios.post("http://localhost:3001/api/v1/auth/login", { email, password }, { withCredentials: true }),
+        dataFormatterFunct
+    );
 
-export const logoutRequest = () => axios.get("http://localhost:3001/auth/logout", { withCredentials: true });
+export const tokenIsValidRequest = () =>
+    formatResponse(
+        axios.get("http://localhost:3001/api/v1/auth/tokenIsValid", { withCredentials: true }),
+        dataFormatterFunct
+    );
 
+export const logoutRequest = () => axios.get("http://localhost:3001/api/v1/auth/logout", { withCredentials: true });
 

@@ -59,7 +59,7 @@ router.post('/login', async (req, res) => {
         if (!validPass) return res.status(400).json({ msg: 'Invalid password' });
 
         //Create and assign a token
-        const jwtData = { id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email, role: user.role };
+        const jwtData = { _id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email, role: user.role };
         const token = jwt.sign(jwtData, process.env.TOKEN_SECRET);
         res.cookie('auth_token', `${token}`,
             {
@@ -68,9 +68,7 @@ router.post('/login', async (req, res) => {
                 sameSite: true,
             },
         );
-        res.json({
-            user: { ...jwtData }
-        })
+        res.json(jwtData);
     } catch (error) {
         res.status(500).json({ error: err.message });
     }
@@ -85,9 +83,7 @@ router.get('/tokenIsValid', async (req, res) => {
         if (!tokenUser) return res.status(400).json({ msg: "Token is invalid." })
 
         const user = await User.findOne({ email: tokenUser.email });
-        res.json({
-            user: user
-        })
+        res.json(user)
     } catch (error) {
         res.json({ msg: req });
     }

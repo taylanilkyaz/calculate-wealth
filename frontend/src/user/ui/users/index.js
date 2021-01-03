@@ -12,9 +12,9 @@ export const Users = () => {
         style={{ padding: 24, display: "flex", justifyContent: "center" }}
       >
         {users.map((user) => (
-          <Grid key={user._id} style={{ margin: 15 }}>
+          <Grid key={user.id} style={{ margin: 15 }}>
             <UserCard
-              id={user._id}
+              id={user.id}
               firstName={user.firstName}
               lastName={user.lastName}
               email={user.email}

@@ -4,34 +4,32 @@ const router = express.Router();
 const User = require('../models/User');
 var ObjectId = require('mongodb').ObjectId;
 
-
-
 //Post Wealth
 router.post('/', async (req, res) => {
+    const { unit, amount, userId } = req.body;
 
     try {
-        //  console.log(req.body.userId);
-        const user = await User.findOne({ '_id': ObjectId(req.body.userId) });
-        //  console.log(user);
-        if (!user) return res.status(400).send('Email is not found');
-    } catch (error) {
-        res.json({ message: error });
-    }
+        if (!unit || !amount) {
+            return res.status(400).json({ msg: "Not all fields have been entered." });
+        }
 
-    const wealth = new Wealth({
-        unit: req.body.unit,
-        amount: req.body.amount,
-        user: req.body.userId
-    });
-    try {
+        const user = await User.findOne({ '_id': ObjectId(userId) });
+        if (!user) return res.status(400).json('User is not found');
+
+        const wealth = new Wealth({
+            unit: unit,
+            amount: amount,
+            user: userId
+        });
         const savedWealth = await wealth.save();
         res.json(savedWealth);
-    } catch (error) {
-        res.json({ message: error });
+    }
+    catch (error) {
+        res.status(500).json(error.message);
     }
 });
 
-//Get Wealth
+//Get All Wealths
 router.get('/', async (req, res) => {
     try {
         const wealths = await Wealth.find();
@@ -41,23 +39,20 @@ router.get('/', async (req, res) => {
     }
 });
 
-
-
-//Get Spesific Wealth
-router.get('/:userId', async (req, res) => {
+//Get All Wealths By User
+router.get('/users/:userId', async (req, res) => {
     try {
-        const wealth = await Wealth.findById(req.params.userId);
-        res.json(wealth);
-    } catch (err) {
-        res.json({ message: err });
+        const wealths = await Wealth.find({'user': ObjectId(req.params.userId)});
+        res.json(wealths);
+    } catch (error) {
+        res.json({ message: error });
     }
 });
 
-
 //Delete Wealth
-router.delete('/:userId', async (req, res) => {
+router.delete('/:wealthId', async (req, res) => {
     try {
-        const removedWealth = await Wealth.remove({ _id: req.params.userId });
+        const removedWealth = await Wealth.remove({ _id: req.params.wealthId });
         res.json({ message: 'Wealth successfully deleted.' })
     } catch (err) {
         res.json({ message: err });
@@ -66,16 +61,16 @@ router.delete('/:userId', async (req, res) => {
 
 
 //Update Wealth
-router.put('/:userId', async (req, res) => {
+router.put('/:wealthId', async (req, res) => {
     try {
+        console.log(req.params.wealthId);
         const updatedWealth = await Wealth.updateOne(
-            { _id: req.params.userId },
+            { _id: req.params.wealthId },
             {
                 $set: {
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    email: req.body.email,
-                    password: req.body.password
+                    unit: req.body.unit,
+                    amount: req.body.amount,
+                    user: req.body.userId,
                 }
             });
         res.json(updatedWealth.body)
