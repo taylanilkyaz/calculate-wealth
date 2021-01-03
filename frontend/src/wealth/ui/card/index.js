@@ -7,12 +7,11 @@ import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { Link } from "react-router-dom";
 
 import { useWealthsController } from "../../controllers/use-wealths-controller";
 import Dialog from '@material-ui/core/Dialog';
 import { WealthForm } from "../../ui/form";
-import { useEditWealthController } from "../../controllers/use-edit-wealth-controller";
+import { DialogVariable } from "../../../util";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,11 +43,12 @@ export const WealthCard = ({
   unit,
   amount,
   deleteWealth,
+  editWealth
 }) => {
   const classes = useStyles();
 
-  const { openDialog, closeDialog, isOpen } = useWealthsController();
-  const { wealthState, changeHandler, editWealth } = useEditWealthController({ id, unit, amount });
+  const { openDialog, closeDialog, isOpen } = DialogVariable();
+  const { wealthState, changeHandler } = useWealthsController(id, unit, amount );
 
   return (
     <Card className={classes.root}>
@@ -105,7 +105,8 @@ export const WealthCard = ({
           unit={wealthState.unit}
           amount={wealthState.amount}
           changeHandler={changeHandler}
-          onSubmitWealth={editWealth}/>
+          onSubmitWealth={() => editWealth(id, wealthState)}
+          closeDialog={closeDialog} />
 
       </Dialog>
 

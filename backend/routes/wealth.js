@@ -63,7 +63,6 @@ router.delete('/:wealthId', async (req, res) => {
 //Update Wealth
 router.put('/:wealthId', async (req, res) => {
     try {
-        console.log(req.params.wealthId);
         const updatedWealth = await Wealth.updateOne(
             { _id: req.params.wealthId },
             {
@@ -73,7 +72,7 @@ router.put('/:wealthId', async (req, res) => {
                     user: req.body.userId,
                 }
             });
-        res.json(updatedWealth.body)
+        res.json(updatedWealth.body);
     } catch (err) {
         res.json({ message: 'Update failed. Email must be unique.' });
     }

@@ -1,7 +1,6 @@
 import React from "react";
 import { WealthCard } from "../card";
 import { useWealthsController } from "../../controllers/use-wealths-controller";
-import { useAddWealthController } from "../../controllers/use-add-wealth-controller";
 import { WealthForm } from "../form";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,6 +10,7 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import Dialog from '@material-ui/core/Dialog';
+import { DialogVariable } from "../../../util";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,9 +46,9 @@ export const Wealths = () => {
 
   const classes = useStyles();
 
-  const { wealths, deleteWealth, openDialog, closeDialog, isOpen } = useWealthsController();
-  const { wealthState, changeHandler, addWealth } = useAddWealthController();
-
+  const { wealths, deleteWealth, wealthState, changeHandler, addWealth, editWealth } = useWealthsController();
+  const { openDialog, closeDialog, isOpen } = DialogVariable();
+  
   return (
     <div>
       <Grid container style={{ padding: 24, display: "flex", justifyContent: "center" }}>
@@ -60,6 +60,7 @@ export const Wealths = () => {
               unit={wealth.unit}
               amount={wealth.amount}
               deleteWealth={deleteWealth}
+              editWealth={editWealth}
             />
           </Grid>
         ))}
@@ -88,7 +89,8 @@ export const Wealths = () => {
               unit={wealthState.unit}
               amount={wealthState.amount}
               changeHandler={changeHandler}
-              onSubmitWealth={addWealth} />
+              onSubmitWealth={addWealth}
+              closeDialog={closeDialog} />
 
           </Dialog>
         </div>

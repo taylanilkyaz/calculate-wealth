@@ -10,7 +10,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(3),
@@ -33,6 +32,7 @@ export const WealthForm = ({
   amount,
   changeHandler,
   onSubmitWealth,
+  closeDialog,
 }) => {
   const classes = useStyles();
 
@@ -79,7 +79,10 @@ export const WealthForm = ({
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={(e) => {onSubmitWealth(e)}}
+              onClick={(e) => {
+                closeDialog();
+                return onSubmitWealth(e);
+              }}
             >
               Save
             </Button>

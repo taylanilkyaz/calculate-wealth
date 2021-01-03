@@ -1,37 +1,33 @@
 
-import { useState, useCallback, useContext } from "react";
+import { useCallback } from "react";
 import { updateWealthRequest } from "../../services/use-wealth-service";
 import { notifySuccess, notifyError } from "../../../common-components/controllers/use-notification-controller";
-import UserContext from "../../../context";
 
-export const useEditWealthController = ({ id, unit, amount }) => {
-    const { userData } = useContext(UserContext);
+export const useEditWealthController = (wealths, setWealths) => {
 
-    const [wealthState, setWealthState] = useState({
-        unit: unit,
-        amount: amount,
-        userId: userData.user.id,
-    });
-
-    const changeHandler = useCallback((e) => {
-        setWealthState({ ...wealthState, [e.target.name]: e.target.value });
-    }, [wealthState]);
-
-    const editWealth = useCallback((event) => {
-        // event.preventDefault();
-        updateWealthRequest(id, wealthState)
+    const editWealth = (id, localWealth) => {
+        updateWealthRequest(id, localWealth)
             .then((res) => {
-                setWealthState(res.data);
+                //setWealthState(res.data);
+                onEditWealthFromState(localWealth);
                 notifySuccess("Wealth has been edited.");
             })
             .catch((res) => {
                 notifyError(res.response.data.msg);
             });
-    }, [id, wealthState]);
+    };
+
+    const onEditWealthFromState = useCallback(
+        (wealth) => {
+            const index = wealths.findIndex(element => element.id === wealth.id);
+            var newArray = wealths.slice();
+            newArray[index] = wealth;
+            setWealths(newArray);
+        },
+        [wealths, setWealths]
+    );
 
     return {
-        wealthState,
-        changeHandler,
         editWealth
     };
 
