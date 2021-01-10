@@ -15,9 +15,11 @@ import { DialogVariable } from "../../../util";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    width: 300,
+    height: 300,
     display: "flex",
     flexDirection: "column",
+    textAlign:"center",
     "& > *": {
       margin: theme.spacing(1),
     },
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     color: "white",
-    backgroundColor: "orange",
+    backgroundColor: "#989db9",
     width: theme.spacing(10),
     height: theme.spacing(10),
     fontSize: 30,
@@ -48,13 +50,31 @@ export const WealthCard = ({
   const classes = useStyles();
 
   const { openDialog, closeDialog, isOpen } = DialogVariable();
-  const { wealthState, changeHandler } = useWealthsController(id, unit, amount );
+  const { wealthState, changeHandler } = useWealthsController(id, unit, amount);
+
+
+  const renderSwitch = (param) => {
+    switch (param) {
+      case 'DOLAR':
+        return '$';
+      case 'EURO':
+        return '€';
+      case 'TL':
+        return '₺';
+      case 'POUND':
+        return '£';
+      case 'GOLD':
+        return 'AU';
+      default:
+        return '+';
+    }
+  }
 
   return (
     <Card className={classes.root}>
       <CardActionArea>
         <Avatar className={classes.avatar}>
-          {amount}
+          {renderSwitch(unit)}
         </Avatar>
 
         <CardContent>

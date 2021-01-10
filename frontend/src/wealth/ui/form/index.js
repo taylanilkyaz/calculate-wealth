@@ -53,11 +53,11 @@ export const WealthForm = ({
                   onChange={(e) => changeHandler(e)}
                   style={{ width: 250, marginBottom: 20 }}
                 >
-                  <MenuItem value={"DOLAR"}>Dolar</MenuItem>
-                  <MenuItem value={"EURO"}>Euro</MenuItem>
+                  <MenuItem value={"DOLAR"}>DOLAR</MenuItem>
+                  <MenuItem value={"EURO"}>EURO</MenuItem>
                   <MenuItem value={"GOLD"}>GOLD</MenuItem>
                   <MenuItem value={"POUND"}>POUND</MenuItem>
-                  <MenuItem value={"TURKISHLIRA"}>TL</MenuItem>
+                  <MenuItem value={"TL"}>TL</MenuItem>
                 </Select>
               </Grid>
               <Grid item xs={12}>
