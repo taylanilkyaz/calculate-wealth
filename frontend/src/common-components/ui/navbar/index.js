@@ -50,7 +50,7 @@ export const Navbar = () => {
                                 else {
                                     return (
                                         <div>
-                                            <Button component={Link} to="/users" className={classes.linkText} color="inherit">Wealth</Button>
+                                            <Button component={Link} to="/wealths" className={classes.linkText} color="inherit">Wealths</Button>
                                             <Button component={Link} to="/github" className={classes.linkText} color="inherit">Contact Us</Button>
                                             <Button onClick={logout} className={classes.linkText} color="inherit">Log out</Button>
                                         </div>

@@ -39,7 +39,7 @@ export default createContext(null);
 //         }
 //     }
 //     componentDidMount = async () => {
-//         const response = await axios.get("http://localhost:3001/users");
+//         const response = await axios.get("http://localhost:3001/api/v1/users");
 //         this.setState({
 //             users: response.data
 //         })

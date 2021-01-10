@@ -1,31 +1,13 @@
-import { getUsersRequest, deleteUserRequest } from "../../services/use-users-service";
-import { notifySuccess, notifyError } from "../../../common-components/controllers/use-notification-controller";
-import { useState, useCallback, useEffect } from "react";
+import { getUsersRequest } from "../../services/use-users-service";
+import { useState, useEffect } from "react";
+import { useDeleteUserController } from "../use-delete-user-controller";
 
 export const useUsersController = () => {
   const [users, setUsers] = useState([]);
-
-  const deleteUser = (event, id) => {
-    event.preventDefault(); // It prevent reload page.
-    deleteUserRequest(id)
-      .then(() => {
-        onDeleteUserFromState(id);
-        notifySuccess("User has been deleted");
-      })
-      .catch(() => {
-        notifyError("User can not deleted.!");
-      });
-  };
-
-  const onDeleteUserFromState = useCallback(
-    (userId) => {
-      const updatedUsers = users.filter((user) => user._id !== userId);
-      setUsers(updatedUsers);
-    },
-    [users]
-  );
+  const { deleteUser } = useDeleteUserController({users, setUsers});
 
   useEffect(() => {
+    
     getUsersRequest().then(res => {
       setUsers(res.data);
     });
@@ -33,6 +15,6 @@ export const useUsersController = () => {
 
   return {
     users,
-    deleteUser,
+    deleteUser
   };
 };

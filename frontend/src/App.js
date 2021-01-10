@@ -10,11 +10,14 @@ import { Homepage } from "./common-components/ui/homepage";
 import { ContactUs } from "./common-components/ui/contact-us";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Grid } from "@material-ui/core";
-import axios from "axios";
 import UserContext from "./context";
+
 import { AdminPrivateRoute } from "./middleware/AdminPrivateRoute";
 import { PublicRoute } from "./middleware/PublicRoute";
 import { CustomerPrivateRoute } from "./middleware/CustomerPrivateRoute";
+
+import { Wealths } from "./wealth/ui/wealths";
+import { tokenIsValidRequest } from "./auth/services/use-auth-service";
 
 
 export const App = () => {
@@ -26,12 +29,12 @@ export const App = () => {
 
   useEffect(() => {
     const checkLoggedIn = async () => {
-      const tokenRes = await axios.get("http://localhost:3001/auth/tokenIsValid", { withCredentials: true });
-      if (tokenRes.data) {
-        setUserData({
-          user: tokenRes.data.user,
+      tokenIsValidRequest()
+        .then(res => {
+          setUserData({
+            user: res.data.user,
+          });
         });
-      }
     }
     checkLoggedIn();
   }, []);
@@ -45,11 +48,15 @@ export const App = () => {
             <AdminPrivateRoute exact userData={userData} path="/users" component={Users}></AdminPrivateRoute>
             <AdminPrivateRoute exact userData={userData} path="/edit/:id" component={EditUser}></AdminPrivateRoute>
 
+            <CustomerPrivateRoute exact userData={userData} path="/wealths" component={Wealths}></CustomerPrivateRoute>
+
+
             <PublicRoute exact userData={userData} path="/github" component={ContactUs}></PublicRoute>
             <PublicRoute exact path="/signup" component={SignUp}></PublicRoute>
             <PublicRoute exact path="/" component={Homepage}></PublicRoute>
             <PublicRoute exact path="/login" component={Login}></PublicRoute>
             <PublicRoute exact component={NotFound}></PublicRoute>
+
           </Switch>
         </Grid>
       </UserContext.Provider>

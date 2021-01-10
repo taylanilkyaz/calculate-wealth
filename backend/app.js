@@ -7,7 +7,6 @@ const corsOptions = {
     origin: true,
     credentials: true
 };
-const User = require('./models/User');
 require('dotenv/config');
 
 const DatabaseHelpers = require("./helpers/database-helper");
@@ -24,13 +23,13 @@ async function initiateApp() {
 
     //Import Routes
     const authRoute = require('./routes/auth');
-    app.use('/auth', authRoute);
+    app.use(process.env.API_VERSION_ONE + 'auth', authRoute);
 
     const usersRoute = require('./routes/users');
-    app.use('/users', usersRoute);
+    app.use(process.env.API_VERSION_ONE +'users', usersRoute);
 
     const wealthRoute = require('./routes/wealth');
-    app.use('/wealth', wealthRoute);
+    app.use(process.env.API_VERSION_ONE +'wealths', wealthRoute);
 
 
     //ROUTES

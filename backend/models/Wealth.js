@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Shema;
 
 const units = {
-    DOLLAR: 'Dolar',
-    GOLD: 'Gold',
-    EURO: 'Euro',
-    POUND: 'Pound',
-    TURKISHLIRA: 'TL'
+    DOLAR: 'DOLAR',
+    GOLD: 'GOLD',
+    EURO: 'EURO',
+    POUND: 'POUND',
+    TL: 'TL'
 }
 
 const WealthSchema = new mongoose.Schema({
