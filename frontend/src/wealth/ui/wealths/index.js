@@ -56,9 +56,7 @@ export const Wealths = memo(() => {
         {wealths.map((wealth) => (
           <Grid key={wealth.id} style={{ margin: 15 }}>
             <WealthCard
-              id={wealth.id}
-              unit={wealth.unit}
-              amount={wealth.amount}
+              wealth = {wealth}
               deleteWealth={deleteWealth}
               editWealth={editWealth}
             />
@@ -93,7 +91,15 @@ export const Wealths = memo(() => {
 
         </Dialog>
 
-
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            console.log(wealths);
+          }}>
+          Calculate
+            </Button>
       </Grid>
     </div>
   );

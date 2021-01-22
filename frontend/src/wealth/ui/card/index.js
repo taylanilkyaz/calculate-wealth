@@ -12,16 +12,17 @@ import { useWealthsController } from "../../controllers/use-wealths-controller";
 import Dialog from '@material-ui/core/Dialog';
 import { WealthForm } from "../../ui/form";
 import { DialogVariable } from "../../../util";
+import { CalculateModal } from '../../ui/modal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 300,
-    height: 300,
+    height: 350,
     display: "flex",
     flexDirection: "column",
-    textAlign:"center",
+    textAlign: "center",
     "& > *": {
-      margin: theme.spacing(1),
+      margin: theme.spacing(0.5),
     },
   },
   footerButtons: {
@@ -41,16 +42,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const WealthCard = ({
-  id,
-  unit,
-  amount,
+  wealth,
   deleteWealth,
   editWealth
 }) => {
   const classes = useStyles();
 
   const { openDialog, closeDialog, isOpen } = DialogVariable();
-  const { wealthState, changeHandler } = useWealthsController(id, unit, amount);
+  const { wealthState, changeHandler } = useWealthsController(wealth.id, wealth.unit, wealth.amount);
 
 
   const renderSwitch = (param) => {
@@ -74,7 +73,7 @@ export const WealthCard = ({
     <Card className={classes.root}>
       <CardActionArea>
         <Avatar className={classes.avatar}>
-          {renderSwitch(unit)}
+          {renderSwitch(wealth.unit)}
         </Avatar>
 
         <CardContent>
@@ -84,10 +83,10 @@ export const WealthCard = ({
             component="h2"
             style={{ textTransform: "capitalize" }}
           >
-            {unit}
+            {wealth.unit}
           </Typography>
           <Typography gutterBottom variant="h6" component="h1">
-            {amount}
+            {wealth.amount}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             Lorem Ipsum
@@ -96,7 +95,7 @@ export const WealthCard = ({
       </CardActionArea>
       <CardActions className={classes.footerButtons}>
         <Button
-          onClick={(e) => deleteWealth(e, id)}
+          onClick={(e) => deleteWealth(e, wealth.id)}
           size="medium"
           variant="outlined"
           color="secondary"
@@ -113,7 +112,13 @@ export const WealthCard = ({
         >
           Edit
         </Button>
+
       </CardActions>
+
+      <CalculateModal
+        wealth={wealth}
+      />
+
 
       <Dialog
         open={isOpen}
@@ -125,9 +130,8 @@ export const WealthCard = ({
           unit={wealthState.unit}
           amount={wealthState.amount}
           changeHandler={changeHandler}
-          onSubmitWealth={() => editWealth(id, wealthState)}
+          onSubmitWealth={() => editWealth(wealth.id, wealthState)}
           closeDialog={closeDialog} />
-
       </Dialog>
 
     </Card>
